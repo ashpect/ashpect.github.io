@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 For My Favorite Human 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            animation: fadeIn 0.8s ease-out;
+            padding: 30px 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .page-1 {
+            background: linear-gradient(135deg, #2d1b33 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .float-icon {
+            position: absolute;
+            animation: floatAround 10s ease-in-out infinite;
+            opacity: 0.4;
+            font-size: 35px;
+        }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(10deg); }
+            50% { transform: translateY(-5px) rotate(-5deg); }
+            75% { transform: translateY(-25px) rotate(5deg); }
+        }
+
+        .intro-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .top-icons {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce-icons 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce-icons {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .intro-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 107, 129, 0.5);
+        }
+
+        .intro-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .fun-tagline {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: #ffb6c1;
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .polaroid-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin-bottom: 50px;
+            perspective: 1000px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 12px 12px 55px 12px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .polaroid:nth-child(1) { transform: rotate(-8deg); }
+        .polaroid:nth-child(2) { transform: rotate(5deg); }
+        .polaroid:nth-child(3) { transform: rotate(-4deg); }
+        .polaroid:nth-child(4) { transform: rotate(6deg); }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.1) translateY(-15px) !important;
+            z-index: 10;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .polaroid img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .polaroid .tape {
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            background: rgba(255, 255, 200, 0.5);
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+        }
+
+        .polaroid .caption {
+            font-family: 'Caveat', cursive;
+            font-size: 1rem;
+            color: #333;
+            text-align: center;
+            position: absolute;
+            bottom: 12px;
+            left: 0;
+            right: 0;
+            padding: 0 5px;
+        }
+
+        .cute-btn {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(139, 69, 19, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cute-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 50px rgba(139, 69, 19, 0.7);
+        }
+
+        .cute-btn::before {
+            content: '🍫';
+            position: absolute;
+            left: 15px;
+        }
+
+        .cute-btn::after {
+            content: '🐱';
+            position: absolute;
+            right: 15px;
+        }
+
+        .roast-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 25px 30px;
+            max-width: 500px;
+            margin: 30px 0 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .roast-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #ffb6c1;
+            margin-bottom: 15px;
+        }
+
+        .roast-list {
+            text-align: left;
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .roast-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .roast-list li:last-child {
+            border-bottom: none;
+        }
+
+        .roast-list .icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .love-note {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: #ffb6c1;
+            margin-top: 5px;
+        }
+
+        .page-2 {
+            background: linear-gradient(135deg, #be185d 0%, #e11d48 50%, #f43f5e 100%);
+            justify-content: center !important;
+        }
+
+        .page-2-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-icon {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+            animation: float-bg 8s ease-in-out infinite;
+        }
+
+        @keyframes float-bg {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .question-section {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .big-question-emoji {
+            font-size: 8rem;
+            animation: wiggle 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .question-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        .buttons-container-big {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 100px;
+        }
+
+        .btn-yes-big {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            padding: 20px 55px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(34, 197, 94, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes-big:hover {
+            box-shadow: 0 15px 50px rgba(34, 197, 94, 0.6);
+            transform: scale(1.08);
+        }
+
+        .btn-no-big {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 20px 55px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-no-big:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .no-message-big {
+            margin-top: 30px;
+            color: white;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            min-height: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .page-3 {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+            text-align: center;
+            justify-content: flex-start !important;
+            padding-top: 40px !important;
+        }
+
+        .celebration h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .celebration-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+
+        .happy-icons {
+            font-size: 3rem;
+            margin: 20px 0;
+            animation: bounce 0.6s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .date-card {
+            background: white;
+            padding: 35px 45px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            max-width: 420px;
+        }
+
+        .date-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #7c3aed;
+            margin-bottom: 20px;
+        }
+
+        .date-details {
+            text-align: left;
+        }
+
+        .date-details .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e9d5ff;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .date-details .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .date-details .icon {
+            font-size: 1.4rem;
+            width: 35px;
+            text-align: center;
+        }
+
+        .date-details .label {
+            font-weight: 600;
+            color: #333;
+            min-width: 70px;
+        }
+
+        .countdown {
+            margin-top: 20px;
+            padding: 18px;
+            background: linear-gradient(135deg, #f3e8ff, #fce7f3);
+            border-radius: 15px;
+        }
+
+        .countdown h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #7c3aed;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .countdown .time {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #be185d;
+        }
+
+        .final-roast {
+            margin-top: 25px;
+            color: white;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            animation: confettiFall 4s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .intro-title { font-size: 2.5rem; }
+            .intro-subtitle { font-size: 1.3rem; }
+            .fun-tagline { font-size: 1.1rem; }
+            .polaroid img { width: 130px; height: 130px; }
+            .polaroid { padding: 10px 10px 45px 10px; }
+            .roast-card { padding: 20px; margin: 20px 15px 30px; }
+            .roast-card h2 { font-size: 1.5rem; }
+            .roast-list li { font-size: 0.9rem; }
+            .big-question-emoji { font-size: 5rem; }
+            .question-title { font-size: 2.8rem; }
+            .btn-yes-big, .btn-no-big { padding: 16px 40px; font-size: 1.3rem; }
+            .celebration h1 { font-size: 3.5rem; }
+            .date-card { padding: 25px 30px; margin: 20px 15px; }
+        }
+
+        @media (max-width: 500px) {
+            .polaroid-container { gap: 15px; }
+            .polaroid img { width: 110px; height: 110px; }
+            .big-question-emoji { font-size: 4rem; }
+            .question-title { font-size: 2.2rem; }
+            .buttons-container-big { gap: 15px; }
+            .btn-yes-big, .btn-no-big { padding: 14px 35px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="page page-1 active" id="page1">
+        <div class="stars" id="stars"></div>
+        <div class="floating-icons" id="floatingIcons"></div>
+
+        <div class="intro-section">
+            <div class="top-icons">😇 🐱 🍫 🧶</div>
+            <h1 class="intro-title">Hey Angel...</h1>
+            <p class="intro-subtitle">Yes, you. My angel who's always hoarding dark chocolate. 🍫</p>
+            <p class="fun-tagline">You fell from heaven... and landed straight into a bowl of thupka 🍜 The one who thinks crocheting counts as cardio and whose "muscle gains" are... well, let's not go there 😏</p>
+
+            <div class="polaroid-container">
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop" alt="Cat">
+                    <span class="caption">You + cats = obsession 🐱</span>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=400&h=400&fit=crop" alt="Chocolate">
+                    <span class="caption">Your true love (before me) 🍫</span>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop" alt="Yarn">
+                    <span class="caption">Weekend plans: yarn chaos 🧶</span>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop" alt="Us">
+                    <span class="caption">Us being us 💕</span>
+                </div>
+            </div>
+
+            <div class="roast-card">
+                <h2>Why I Like You (Against My Better Judgment) 😌</h2>
+                <ul class="roast-list">
+                    <li>
+                        <span class="icon">🍫</span>
+                        <span>You share your dark chocolate with me (sometimes, reluctantly, after I stare long enough)</span>
+                    </li>
+                    <li>
+                        <span class="icon">🍜</span>
+                        <span>Your thupka obsession is adorable... even when you slurp louder than a vacuum cleaner</span>
+                    </li>
+                    <li>
+                        <span class="icon">🧶</span>
+                        <span>You crochet me things! Even if I don't know what half of them are supposed to be</span>
+                    </li>
+                    <li>
+                        <span class="icon">💪</span>
+                        <span>Those "muscle gains"... I mean, I can definitely see... something? Maybe? In the right lighting?</span>
+                    </li>
+                    <li>
+                        <span class="icon">🐱</span>
+                        <span>You love cats as much as me, which honestly might be a mental health concern for both of us</span>
+                    </li>
+                </ul>
+                <p class="love-note">But seriously... you're my favorite weirdo 💕</p>
+            </div>
+
+            <button class="cute-btn" onclick="goToPage(2)">Okay but I have a question...</button>
+        </div>
+    </section>
+
+    <section class="page page-2" id="page2">
+        <div class="page-2-bg" id="page2Bg"></div>
+
+        <div class="question-section">
+            <div class="big-question-emoji">🥺</div>
+            <h1 class="question-title">Will you be my Valentine?</h1>
+            
+            <div class="buttons-container-big">
+                <button class="btn-yes-big" id="yesBtn" onclick="sayYes()">Yes! 💕</button>
+                <button class="btn-no-big" id="noBtn" onclick="shrinkNo()">No 😢</button>
+            </div>
+            
+            <p class="no-message-big" id="noMessage"></p>
+        </div>
+    </section>
+
+    <section class="page page-3" id="page3">
+        <div class="celebration">
+            <h1>YAAAY! 🎉</h1>
+            <p class="celebration-subtitle">I knew my angel couldn't resist! 😇</p>
+            <div class="happy-icons">👼 💕 🐱 💕 🍫</div>
+        </div>
+
+        <div class="date-card">
+            <h2>Our Valentine's Date 💘</h2>
+            
+            <div class="date-details">
+                <div class="detail-item">
+                    <span class="icon">📅</span>
+                    <span class="label">When:</span>
+                    <span>February 14th, 2026</span>
+                </div>
+                <div class="detail-item">
+                    <span class="icon">⏰</span>
+                    <span class="label">Time:</span>
+                    <span>7:00 PM</span>
+                </div>
+                <div class="detail-item">
+                    <span class="icon">🍽️</span>
+                    <span class="label">Food:</span>
+                    <span>Mam, I won't take your right to choose menu</span>
+                </div>
+                <div class="detail-item">
+                    <span class="icon">🍫</span>
+                    <span class="label">Dessert:</span>
+                    <span>Your choice (dark chocolate?)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="icon">👗</span>
+                    <span class="label">Dress:</span>
+                    <span>You slay girl!</span>
+                </div>
+            </div>
+
+            <div class="countdown">
+                <h3>Counting down... 💕</h3>
+                <div class="time" id="countdown">Loading...</div>
+            </div>
+        </div>
+
+        <p class="final-roast">P.S. - Wear that crocheted thing you made, angel... I'll pretend I know what it is 🧶😇</p>
+    </section>
+
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script>
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                container.appendChild(star);
+            }
+        }
+
+        function createFloatingIcons() {
+            const container = document.getElementById('floatingIcons');
+            const icons = ['🐱', '🍫', '🧶', '💕', '✨', '🍜', '😇', '👼'];
+            
+            for (let i = 0; i < 12; i++) {
+                const el = document.createElement('div');
+                el.className = 'float-icon';
+                el.textContent = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 100 + '%';
+                el.style.animationDelay = Math.random() * 10 + 's';
+                el.style.animationDuration = (8 + Math.random() * 6) + 's';
+                el.style.fontSize = (25 + Math.random() * 20) + 'px';
+                container.appendChild(el);
+            }
+        }
+
+        function createPage2Bg() {
+            const container = document.getElementById('page2Bg');
+            const icons = ['🐱', '🍫', '🧶', '💕', '🍜'];
+            
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.className = 'bg-icon';
+                el.textContent = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 100 + '%';
+                el.style.animationDelay = Math.random() * 20 + 's';
+                el.style.fontSize = (30 + Math.random() * 40) + 'px';
+                container.appendChild(el);
+            }
+        }
+
+        function goToPage(pageNum) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(function(page) {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById('page' + pageNum);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            if (pageNum === 2) {
+                createPage2Bg();
+            }
+            
+            if (pageNum === 3) {
+                createConfetti();
+                startCountdown();
+            }
+        }
+
+        let noClickCount = 0;
+        const noMessages = [
+            "Wait what?! 🥺",
+            "Not even for thupka together? 🍜",
+            "I'll give you my dark chocolate... 🍫",
+            "The cat would be disappointed... 🐱",
+            "My crocheted heart is unraveling... 🧶💔",
+            "Okay my 'muscles' are hurt now 💪😢",
+            "PLEASE I'M BEGGING 😭",
+            "The button is literally right there →"
+        ];
+
+        function shrinkNo() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const noMessage = document.getElementById('noMessage');
+            
+            noClickCount++;
+            
+            const noScale = Math.max(0.15, 1 - (noClickCount * 0.18));
+            noBtn.style.transform = 'scale(' + noScale + ')';
+            
+            const yesScale = 1 + (noClickCount * 0.15);
+            const yesPadding = 20 + noClickCount * 4;
+            yesBtn.style.transform = 'scale(' + yesScale + ')';
+            yesBtn.style.padding = yesPadding + 'px ' + (yesPadding * 2.5) + 'px';
+            
+            const messageIndex = Math.min(noClickCount - 1, noMessages.length - 1);
+            noMessage.textContent = noMessages[messageIndex];
+            
+            if (noClickCount > 4) {
+                const randomX = (Math.random() - 0.5) * 150;
+                const randomY = (Math.random() - 0.5) * 80;
+                noBtn.style.position = 'relative';
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+            }
+            
+            if (noClickCount > 7) {
+                noBtn.style.visibility = 'hidden';
+                noMessage.textContent = "Oops! No button ran away... guess you have to say yes! 😏🐱";
+            }
+        }
+
+        function sayYes() {
+            goToPage(3);
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const shapes = ['❤️', '💕', '🐱', '🍫', '🧶', '✨', '🎉', '💜', '🍜'];
+            
+            for (let i = 0; i < 80; i++) {
+                setTimeout(function() {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(function() {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 60);
+            }
+        }
+
+        function startCountdown() {
+            const valentinesDay = new Date('February 14, 2026 19:00:00').getTime();
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = valentinesDay - now;
+                
+                if (distance < 0) {
+                    document.getElementById('countdown').textContent = "It's time! Let's go! 💕";
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown').textContent = 
+                    days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        createStars();
+        createFloatingIcons();
+    </script>
+</body>
+</html>
